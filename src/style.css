@@ -1,0 +1,116 @@
+body {
+  font-family: Helvetica,Arial,sans-serif;
+}
+
+.todobox__container {
+  font-size: 16px;
+  text-align: center;
+  max-width: 400px;
+  height: 500px;
+  margin: 20px auto;
+  background: #f0e6fe;
+  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.12), 0 4px 8px 0 rgba(0, 0, 0, 0.08);
+  border: 0;
+  border-radius: 3px;
+  padding: 30px;
+}
+
+h1 {
+  font-size: 36px;
+  color: #dfa4ff;
+} 
+
+hr {
+  border: 1px solid #ddd;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+ul {
+  padding: 0;
+}
+
+/* todoList Part*/
+.listgroup__item {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 10px 15px;
+  margin: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+  .checkbox {
+    margin-right: 10px;
+    flex: 1;
+  }
+
+  .listgroup__task {
+    text-align: left;
+    flex: 8;
+  }
+
+  .btn__delete {
+    display: none;
+    padding: 0;
+    font-size: 16px;
+    color: #cccccc;
+    border: none;
+    background: 0 0;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .btn__delete:hover {
+    color: #808080;
+  }
+  /* show delete button when hover over listItem */
+  .listgroup__item:hover .btn__delete {
+    display: inline;
+  }
+
+  .listgroup__item__checked {
+    background-color: #dbeed3;
+  }
+
+/* listForm Part*/
+.form__container {
+  margin-top:80px;
+}
+
+.form__group {
+  display: flex;
+}
+
+.form__label {
+  flex: 1;
+  margin: auto;
+}
+.form__input {
+  flex: 3;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.btn__task {
+  padding: 10px 15px;
+  color: #fff;
+  font-weight: bold;
+  background-color: #dfa4ff;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn__task:hover {
+  background-color: #d280ff;
+}
