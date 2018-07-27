@@ -3,6 +3,16 @@ import ReactDOM from "react-dom";
 import "./style.css";
 
 class TodoItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.deleteTask=this.deleteTask.bind(this);
+    }
+    
+    // get the deleted task id and pass to delete handler
+    deleteTask(){
+        this.props.getDeletedId(this.props.taskId);
+        console.log('get the deleted Id ' + this.props.taskId + ' successfully');
+    }
 
     render () {
         let task = this.props.listItem.task;
@@ -23,7 +33,7 @@ class TodoItem extends React.Component {
             <div className="listgroup__task">
                 {task}
             </div>
-            <button className="btn__delete" type="button">delete</button>
+            <button className="btn__delete" type="button" onClick={this.deleteTask} >delete</button>
         </li>
         );
     }
@@ -49,7 +59,8 @@ class TodoList extends React.Component {
             key = {listItem.id}
             taskId = {listItem.id}
             listItem={listItem}
-            complete={listItem.complete} />
+            complete={listItem.complete}
+            getDeletedId={this.props.getDeletedId} />
         );
 
         return (
@@ -75,7 +86,7 @@ class TodoForm extends React.Component {
         this.setState({value: e.target.value});
     }
 
-    // add a new ta
+    // submit a new task and pass to data
     submitTask(e) {
         e.preventDefault();
         let task = this.state.value.trim();
@@ -105,6 +116,7 @@ class TodoBox extends React.Component {
 
     constructor(props) {
         super(props);
+        this.handleDelete=this.handleDelete.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
         this.state = {
             data:[
@@ -115,6 +127,13 @@ class TodoBox extends React.Component {
                 {"id": 5, "task": "formula", "complete": true }
             ]
         }
+    }
+
+    // delete a task by id and set the latest data in state
+    handleDelete(taskId) {
+        let data= this.state.data;
+        data = data.filter((task) => task.id !== taskId );
+        this.setState({data});
     }
 
     // add a new id for the new task
@@ -128,7 +147,7 @@ class TodoBox extends React.Component {
         return max;
     }
     
-    // add a new task to list and set the latest data in state
+    // add a new task item to list and set the latest data in state
     handleSubmit(task){
         let data= this.state.data;
         const id = this.maxId(data)+1;
@@ -142,7 +161,8 @@ class TodoBox extends React.Component {
                 <h1>To do List</h1>
                 <hr/>
                 <TodoList
-                 data = {this.state.data}/>
+                 data = {this.state.data}
+                 getDeletedId={this.handleDelete} />
                 <TodoForm
                  getTask={this.handleSubmit} />
             </div>
