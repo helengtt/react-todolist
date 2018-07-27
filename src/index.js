@@ -97,11 +97,11 @@ class TodoForm extends React.Component {
     submitTask(e) {
         e.preventDefault();
         let task = this.state.value.trim();
-        console.log('get the new task ' + task + ' successfully');
         if (!task) {
             return ;
         }
         this.props.getTask(task);
+        console.log('get the new task ' + task + ' successfully');
         this.state.value='';
     } 
 
