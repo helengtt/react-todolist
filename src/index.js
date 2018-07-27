@@ -6,8 +6,14 @@ class TodoItem extends React.Component {
     constructor(props) {
         super(props);
         this.deleteTask=this.deleteTask.bind(this);
+        this.toggleComplete=this.toggleComplete.bind(this);
     }
     
+    // get the task id of checkbox changed and pass to complete toggle handler
+    toggleComplete() {
+        this.props.getCompletedId(this.props.taskId);
+    }
+
     // get the deleted task id and pass to delete handler
     deleteTask(){
         this.props.getDeletedId(this.props.taskId);
@@ -29,7 +35,7 @@ class TodoItem extends React.Component {
 
         return (
         <li className = {itemClasses}>
-            <input className="checkbox" type="checkbox" checked={itemChecked} />
+            <input className="checkbox" type="checkbox" checked={itemChecked} onChange={this.toggleComplete} />
             <div className="listgroup__task">
                 {task}
             </div>
@@ -60,7 +66,8 @@ class TodoList extends React.Component {
             taskId = {listItem.id}
             listItem={listItem}
             complete={listItem.complete}
-            getDeletedId={this.props.getDeletedId} />
+            getDeletedId={this.props.getDeletedId}
+            getCompletedId={this.props.getCompletedId} />
         );
 
         return (
@@ -90,6 +97,7 @@ class TodoForm extends React.Component {
     submitTask(e) {
         e.preventDefault();
         let task = this.state.value.trim();
+        console.log('get the new task ' + task + ' successfully');
         if (!task) {
             return ;
         }
@@ -116,6 +124,7 @@ class TodoBox extends React.Component {
 
     constructor(props) {
         super(props);
+        this.handleToggleComplete=this.handleToggleComplete.bind(this);
         this.handleDelete=this.handleDelete.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
         this.state = {
@@ -127,6 +136,18 @@ class TodoBox extends React.Component {
                 {"id": 5, "task": "formula", "complete": true }
             ]
         }
+    }
+
+    // toggle the task 'complete' state in data by id
+    handleToggleComplete(taskId) {
+        let data = this.state.data;
+        for (let i=0; i<data.length; i++){
+            if(data[i].id===taskId) {
+                data[i].complete = data[i].complete=== true ? false : true;
+                break;
+            }
+        }
+        this.setState({data});
     }
 
     // delete a task by id and set the latest data in state
@@ -162,7 +183,8 @@ class TodoBox extends React.Component {
                 <hr/>
                 <TodoList
                  data = {this.state.data}
-                 getDeletedId={this.handleDelete} />
+                 getDeletedId={this.handleDelete}
+                 getCompletedId={this.handleToggleComplete} />
                 <TodoForm
                  getTask={this.handleSubmit} />
             </div>
