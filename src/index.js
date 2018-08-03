@@ -159,6 +159,9 @@ class TodoBox extends React.Component {
 
     // add a new id for the new task
     maxId(data) {
+        if (data.length === 0) {
+            return 0;
+        }
         let max = data[0].id;
         for(let i = 1; i < data.length; i++) {
             if(data[i].id > max) {
